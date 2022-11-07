@@ -42,7 +42,6 @@ void printContact(){
 void freeNode(struct ContactNode* node){
     free(node->contactName);
     free(node->contactPhoneNumber);
-    free(node);
 }
 
 void freeLLHelper(struct ContactNode* node){
@@ -50,6 +49,7 @@ void freeLLHelper(struct ContactNode* node){
         freeLLHelper(node->next);
     }
     freeNode(node);
+    free(node);
 }
 
 void freeLinkedList(){
@@ -61,10 +61,10 @@ int main(void) {
 
     size_t buf = 100;
     char * input = (char*) malloc (sizeof (char) *buf);
-    char * name = (char*) malloc (sizeof (char) *buf);
-    char * phone = (char*) malloc (sizeof (char) *buf);
+    char * name;
+    char * phone;
     int index = 0;
-    while (getline(&input,&buf,stdin)!=-1 && index<6){
+    while (index<6 && getline(&input,&buf,stdin)!=-1){
         input[strlen(input)-1]=0;//remove new line symbol
 
         if (index%2==1){
